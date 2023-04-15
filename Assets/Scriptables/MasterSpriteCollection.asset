@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01573e21c63b0a2498a87f1199ed94b5, type: 3}
+  m_Name: MasterSpriteCollection
+  m_EditorClassIdentifier: 
+  stones: {fileID: 11400000, guid: 1ed33353e0ad6c04e97bec336f5f55e4, type: 2}
+  smallCosmetics: {fileID: 11400000, guid: aa4e07da973677b4091eb6ff817bdcfe, type: 2}
+  monsters: {fileID: 11400000, guid: a5bfd8b3d7239aa4fb9edfbbe4b201ab, type: 2}
