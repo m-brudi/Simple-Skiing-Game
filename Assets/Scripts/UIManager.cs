@@ -81,12 +81,12 @@ public class UIManager : MonoBehaviour
     public void UpdateCounters(int row, int mons) {
         if(row > 0) rowCounterTxt.text = row.ToString();
     }
-    public void ShowSummeryPanel(int dist, float time) {
+    public void ShowSummeryPanel(int dist, float time, int snowman) {
         soundsButtons.SetActive(true);
         ShowBlackOut();
         rowCounterTxt.text = "";
         summaryPanel.gameObject.SetActive(true);
-        summaryPanel.Setup(dist, time);
+        summaryPanel.Setup(dist, time, snowman);
     }
     public void ShowBlackOut() {
         blackOut.DOScale(1, 0.1f);

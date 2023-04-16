@@ -18,12 +18,15 @@ public class MapGenerator : MonoBehaviour
     public Stop lastToMakeNew;
     [Space]
     [SerializeField] List<GameObject> lifts;
-    void Start()
-    {
-        
-    }
 
+    List<GameObject> spawnedLifts;
+
+    private void Start() {
+        spawnedLifts = new List<GameObject>();
+    }
     public void StartNewMap() {
+        StopAllCoroutines();
+        DestroyAllLifts();
         GenerateMap(0, numOfStops);
         StartCoroutine(SpawnLifts());
     }
@@ -163,13 +166,19 @@ public class MapGenerator : MonoBehaviour
             float xPos = Controller.Instance.player.transform.position.x;
             if (Controller.Instance.CanMove) {
                 GameObject a = Instantiate(lifts[num]);
+                spawnedLifts.Add(a.gameObject);
                 a.transform.position = new Vector3(xPos, yPos, 0);
             }
          }
     }
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            //MakeAnotherRow();
+
+    public void DestroyAllLifts() {
+        if (spawnedLifts.Count > 0) {
+            foreach (var item in spawnedLifts) {
+                Destroy(item);
+            }
         }
+        spawnedLifts.Clear();
     }
+
 }

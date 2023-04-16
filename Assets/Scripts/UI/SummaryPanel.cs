@@ -9,11 +9,13 @@ public class SummaryPanel : MonoBehaviour
     [SerializeField] TextMeshProUGUI dstTxt;
     [SerializeField] TextMeshProUGUI timeTxt;
     [SerializeField] TextMeshProUGUI speedTxt;
+    [SerializeField] TextMeshProUGUI snowmanTxt;
+    [SerializeField] Transform snowmanIcon;
     [SerializeField] Button retryBtn;
     [SerializeField] Button backBtn;
     [SerializeField] Color recordColor;
     [SerializeField] Color normalColor;
-    public void Setup(int dist, float time) {
+    public void Setup(int dist, float time, int snowman) {
         AudioManager.Instance.PlayGameOver();
         transform.DOScale(1, 0.3f);
         retryBtn.onClick.RemoveAllListeners();
@@ -23,16 +25,19 @@ public class SummaryPanel : MonoBehaviour
         dstTxt.transform.DOScale(0, 0);
         timeTxt.transform.DOScale(0, 0);
         speedTxt.transform.DOScale(0, 0);
+        snowmanTxt.transform.DOScale(0, 0);
+        snowmanIcon.DOScale(0, 0);
 
         dstTxt.color = normalColor;
         timeTxt.color = normalColor;
         speedTxt.color = normalColor;
+        snowmanTxt.color = normalColor;
 
-        StartCoroutine(Seq(dist, time));
+        StartCoroutine(Seq(dist, time, snowman));
         
     }
 
-    IEnumerator Seq(int dist, float time) {
+    IEnumerator Seq(int dist, float time, int snowman) {
 
         if (dist > Controller.Instance.BestDistance) {
             Controller.Instance.BestDistance = dist;
@@ -49,7 +54,6 @@ public class SummaryPanel : MonoBehaviour
         if (time > Controller.Instance.BestTime) {
             Controller.Instance.BestTime = (int)time;
             timeTxt.color = recordColor;
-
         }
 
         float minutes = Mathf.FloorToInt(time / 60);
@@ -70,6 +74,16 @@ public class SummaryPanel : MonoBehaviour
 
         speedTxt.text = Mathf.FloorToInt(kmPerH) + "<br>Km/h";
         speedTxt.transform.DOScale(1, .3f).SetEase(Ease.InQuint);
+        AudioManager.Instance.PlayPop();
+
+        yield return new WaitForSeconds(.2f);
+        if (snowman == Controller.Instance.BestSnowman) {
+            snowmanTxt.color = recordColor;
+        }
+
+        snowmanTxt.text = (snowman*10).ToString() +"m";
+        snowmanTxt.transform.DOScale(1, .3f).SetEase(Ease.InQuint);
+        snowmanIcon.DOScale(1, .3f).SetEase(Ease.InQuint);
         AudioManager.Instance.PlayPop();
 
         yield return new WaitForSeconds(.2f);

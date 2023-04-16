@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] TrailRenderer trail1;
     [SerializeField] TrailRenderer trail2;
     bool readyToMove;
-
+    public bool snowMan;
     public void NewStart() {
         trail1.enabled = false;
         trail2.enabled = false;
@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
         trail1.enabled = true;
         trail2.enabled = true;
         StopSnowman();
+        snowMan = false;
     }
 
     void Update(){
@@ -101,9 +102,12 @@ public class Player : MonoBehaviour
 
     public void StartSnowman() {
         snowmanHead.SetActive(true);
+        snowMan = true;
     }
 
     public void StopSnowman() {
+        Controller.Instance.SnowmanStops = 0;
         snowmanHead.SetActive(false);
+        snowMan = false;
     }
 }

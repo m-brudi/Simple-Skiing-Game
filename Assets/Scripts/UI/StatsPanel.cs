@@ -10,6 +10,7 @@ public class StatsPanel : MonoBehaviour
     [SerializeField] TextMeshProUGUI bestDist;
     [SerializeField] TextMeshProUGUI bestTime;
     [SerializeField] TextMeshProUGUI bestSpeed;
+    [SerializeField] TextMeshProUGUI bestSnowman;
     [SerializeField] Button backBtn;
     [SerializeField] Button resetBtn;
 
@@ -33,8 +34,20 @@ public class StatsPanel : MonoBehaviour
     }
 
     void SetupTxts() {
-        bestDist.text = (Controller.Instance.BestDistance * 10).ToString() + "m";
-        bestTime.text = Controller.Instance.BestTime.ToString();
-        bestSpeed.text = Controller.Instance.BestSpeed.ToString();
+        bestDist.text = (Controller.Instance.BestDistance * 10).ToString() + " m";
+        int time  = Controller.Instance.BestTime;
+        float minutes = Mathf.FloorToInt(time / 60);
+        float seconds = Mathf.FloorToInt(time % 60);
+        bestTime.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+        if (time > 0) {
+            int meters = Controller.Instance.BestDistance * 10;
+            float mPerS = meters / time;
+            float kmPerH = mPerS * 3.6f;
+            bestSpeed.text = Mathf.FloorToInt(kmPerH).ToString() + "Km/h";
+        } else {
+            bestSpeed.text = "0 Km/h";
+        }
+        bestSnowman.text = (Controller.Instance.BestSnowman * 10).ToString() + " m";
     }
 }
